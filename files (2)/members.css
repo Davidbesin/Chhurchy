@@ -1,0 +1,278 @@
+:root {
+  --navy:       #0b1f4b;
+  --navy-2:     #0d2a66;
+  --navy-light: #1a3a7a;
+  --gold:       #c8860a;
+  --gold-light: #f5a623;
+  --gold-glow:  rgba(200,134,10,.14);
+  --surface:    #f4f6fb;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+/* ─── SIDEBAR BACK BUTTON ── */
+.sidebar-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(255,255,255,.5);
+  text-decoration: none;
+  padding: 7px 12px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(255,255,255,.05);
+  transition: all .2s;
+  align-self: flex-start;
+}
+.sidebar-back:hover {
+  color: #fff;
+  background: rgba(255,255,255,.1);
+  border-color: rgba(255,255,255,.2);
+}
+.sidebar-back i { font-size: 14px; }
+
+/* ─── MOBILE BACK ── */
+.mobile-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  border-radius: 9px;
+  background: rgba(255,255,255,.1);
+  color: rgba(255,255,255,.8);
+  text-decoration: none;
+  font-size: 16px;
+  transition: background .2s;
+}
+.mobile-back:hover { background: rgba(255,255,255,.2); color: #fff; }
+
+/* ─── SIDEBAR ── */
+.sidebar {
+  width: 300px;
+  position: relative;
+  background: var(--navy);
+}
+.sidebar-bg {
+  position: absolute; inset: 0;
+  background: url("images/Bg.jpeg") center/cover;
+  opacity: .18;
+}
+.sidebar-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(165deg, var(--navy) 0%, var(--navy-2) 60%, #091838 100%);
+  opacity: .96;
+}
+.sidebar-inner { position: relative; z-index: 2; height: 100%; }
+
+.logo-mark {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: var(--gold-glow);
+  border: 1.5px solid rgba(200,134,10,.35);
+  font-size: 20px;
+  color: var(--gold-light);
+}
+.logo-text strong { font-size: 14px; color: #fff; letter-spacing: .01em; }
+.logo-text span   { font-size: 11px; color: rgba(255,255,255,.45); letter-spacing: .06em; }
+
+.welcome-block {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+}
+.welcome-block .eyebrow { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-light); }
+.welcome-block h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 19px; font-weight: 700; color: #fff; line-height: 1.25; }
+.welcome-block p  { font-size: 12.5px; color: rgba(255,255,255,.55); line-height: 1.6; }
+
+.next-service {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px;
+  background: var(--gold-glow);
+  border: 1px solid rgba(200,134,10,.3);
+  border-radius: 20px;
+  font-size: 11px; color: var(--gold-light); font-weight: 500;
+}
+
+.nav-label { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.3); }
+
+.nav-link-item {
+  display: flex; align-items: center; gap: 11px;
+  padding: 11px 14px; border-radius: 11px;
+  text-decoration: none;
+  color: rgba(255,255,255,.62);
+  font-size: 14px; font-weight: 500;
+  transition: all .2s ease;
+}
+.nav-link-item i { font-size: 16px; width: 20px; text-align: center; }
+.nav-link-item:hover { background: rgba(255,255,255,.06); color: #fff; transform: translateX(3px); }
+.nav-link-item.active { background: var(--gold-glow); color: var(--gold-light); border: 1px solid rgba(200,134,10,.22); }
+
+.sidebar-quote { font-family: 'Playfair Display', Georgia, serif; font-size: 12px; font-style: italic; color: rgba(255,255,255,.32); line-height: 1.6; }
+
+/* ─── PANELS ── */
+.panels-viewport {
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.panels-viewport::-webkit-scrollbar { display: none; }
+
+.panel { flex-shrink: 0; width: 100%; scroll-snap-align: start; overflow-y: auto; scrollbar-width: thin; }
+.panel::-webkit-scrollbar { width: 4px; }
+.panel::-webkit-scrollbar-thumb { background: rgba(0,0,0,.1); border-radius: 4px; }
+
+/* ─── TYPOGRAPHY ── */
+.section-title { font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 700; color: #111827; }
+.see-all { font-size: 13px; font-weight: 600; color: var(--gold); text-decoration: none; }
+.see-all:hover { color: var(--gold-light); }
+.greeting { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+.page-h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 30px; font-weight: 700; color: #111827; line-height: 1.2; }
+
+/* ─── VERSE CARD ── */
+.verse-card {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+  border-radius: 20px; border: none;
+  position: relative; overflow: hidden;
+}
+.verse-card::before {
+  content: "\201C";
+  position: absolute; top: -10px; right: 24px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 120px; color: rgba(255,255,255,.06);
+  line-height: 1; pointer-events: none;
+}
+.verse-eyebrow { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-light); }
+.verse-text { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-style: italic; color: rgba(255,255,255,.92); line-height: 1.65; }
+.verse-ref { font-size: 13px; font-weight: 600; color: var(--gold-light); }
+
+/* ─── ANNOUNCE CARDS ── */
+.announce-card { border: 1px solid rgba(0,0,0,.07); border-radius: 16px; overflow: hidden; transition: transform .2s, box-shadow .2s; }
+.announce-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(11,31,75,.1); }
+.announce-thumb { height: 100px; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); font-size: 36px; }
+.card-tag { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--gold); }
+.announce-card h6 { font-size: 14px; font-weight: 600; color: #111827; line-height: 1.4; }
+.announce-card p  { font-size: 12.5px; color: #6b7280; line-height: 1.55; }
+.card-date        { font-size: 11.5px; color: #6b7280; }
+
+/* ─── SERMON CARDS ── */
+.sermon-card { background: #fff; border: 1px solid rgba(0,0,0,.07); border-radius: 16px; transition: transform .2s, box-shadow .2s; }
+.sermon-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(11,31,75,.08); }
+.sermon-icon { width: 46px; height: 46px; border-radius: 13px; background: var(--gold-glow); border: 1px solid rgba(200,134,10,.2); font-size: 20px; color: var(--gold); flex-shrink: 0; }
+.sermon-card h6   { font-size: 14px; font-weight: 600; color: #111827; }
+.sermon-card .spkr { font-size: 12px; color: #6b7280; }
+.play-btn {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--gold); background: transparent;
+  color: var(--gold); flex-shrink: 0; cursor: pointer; transition: all .2s;
+}
+.play-btn:hover { background: var(--gold); color: #fff; }
+
+/* ─── PRAYER CARDS ── */
+.prayer-card { background: #fff; border: 1px solid rgba(0,0,0,.07); border-radius: 16px; transition: transform .2s, box-shadow .2s; }
+.prayer-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(11,31,75,.08); }
+.requester-avatar { width: 36px; height: 36px; border-radius: 50%; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; }
+.requester-name { font-size: 14px; font-weight: 600; color: #111827; }
+.requester-time { font-size: 11.5px; color: #6b7280; }
+.prayer-card p  { font-size: 13px; color: #6b7280; line-height: 1.6; }
+.pray-btn {
+  background: none; border: 1.5px solid var(--gold);
+  color: var(--gold); border-radius: 8px;
+  padding: 6px 14px; font-size: 12.5px; font-weight: 600;
+  cursor: pointer; transition: all .2s;
+}
+.pray-btn:hover { background: var(--gold); color: #fff; }
+
+/* ─── ABOUT ── */
+.about-card  { border: 1px solid rgba(0,0,0,.07); border-radius: 16px; }
+.about-stat  { background: var(--surface); border-radius: 14px; text-align: center; }
+.stat-num    { font-family: 'Playfair Display', Georgia, serif; font-size: 32px; font-weight: 700; color: var(--navy); line-height: 1; }
+.stat-num span { color: var(--gold); }
+.stat-label  { font-size: 12px; color: #6b7280; }
+
+/* ─── FOOTER ── */
+.footer-contact a { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: #6b7280; text-decoration: none; transition: color .15s; }
+.footer-contact a:hover { color: var(--gold); }
+.footer-contact i { font-size: 15px; color: var(--gold); }
+
+/* ─── MOBILE HEADER ── */
+.mobile-header { display: none; }
+.mobile-subnav { background: var(--navy-2); border-top: 1px solid rgba(255,255,255,.07); overflow-x: auto; scrollbar-width: none; }
+.mobile-subnav::-webkit-scrollbar { display: none; }
+.mobile-subnav a {
+  flex-shrink: 0; display: flex; align-items: center; gap: 6px;
+  padding: 11px 16px; text-decoration: none;
+  color: rgba(255,255,255,.55); font-size: 13px; font-weight: 500; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+.mobile-subnav a i { font-size: 15px; }
+.mobile-subnav a.active { color: var(--gold-light); border-bottom-color: var(--gold-light); }
+
+/* ─── RESPONSIVE ── */
+@media (max-width: 991.98px) {
+  body { overflow: auto; }
+  .sidebar { display: none !important; }
+  .mobile-header { display: block; position: sticky; top: 0; z-index: 100; }
+  .panels-viewport { display: block !important; overflow-x: hidden; scroll-snap-type: none; }
+  .panel { width: 100% !important; height: auto !important; overflow-y: visible; scroll-snap-align: none; }
+  .page-h1 { font-size: 24px; }
+  .verse-text { font-size: 15px; }
+}
+
+/* ─── POST PRAYER BOX ── */
+.post-prayer-box {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.07);
+  border-radius: 18px;
+  padding: 18px 20px;
+}
+.post-prayer-label {
+  font-size: 12px; font-weight: 600;
+  color: var(--gold); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.post-prayer-label i { font-size: 13px; }
+.post-prayer-box textarea {
+  width: 100%; border: 1.5px solid #e5e7eb;
+  border-radius: 12px; padding: 12px 14px;
+  font-family: 'Inter', sans-serif; font-size: 13.5px;
+  color: #374151; resize: vertical; outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  background: var(--surface);
+}
+.post-prayer-box textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200,134,10,.12);
+  background: #fff;
+}
+.post-prayer-hint { font-size: 12px; color: #9ca3af; }
+.post-prayer-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 18px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+  color: #fff; border: none; border-radius: 10px;
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: opacity .2s, transform .15s;
+  box-shadow: 0 4px 12px rgba(11,31,75,.22);
+}
+.post-prayer-btn:hover { opacity: .9; transform: translateY(-1px); }
+.post-prayer-btn i { color: var(--gold-light); }
+.prayer-success {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #f0fdf4; border: 1px solid #bbf7d0;
+  border-radius: 10px; color: #166534;
+  font-size: 13px; font-weight: 500;
+  align-items: center; gap: 8px;
+}
+.pray-count { font-size: 11px; opacity: .8; }
+
+/* ─── HOME INFO CARDS ── */
+.home-info-card { cursor: default; }

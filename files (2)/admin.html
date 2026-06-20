@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal – RCCG Chapel of Grace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="admin.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="adm-sidebar d-flex flex-column">
+  <div class="adm-sidebar-top">
+    <a href="index.html" class="adm-back"><i class="bi bi-arrow-left"></i> All Portals</a>
+    <div class="adm-logo">
+      <div class="adm-logo-mark">✛</div>
+      <div>
+        <strong>Chapel of Grace</strong>
+        <span>Admin Dashboard</span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="adm-nav">
+    <button class="adm-nav-btn active" data-panel="prayers"><i class="bi bi-hands"></i> Prayer Requests</button>
+    <button class="adm-nav-btn" data-panel="sermons"><i class="bi bi-mic"></i> Sermons</button>
+    <button class="adm-nav-btn" data-panel="announcements"><i class="bi bi-megaphone"></i> Announcements</button>
+    <button class="adm-nav-btn" data-panel="homecards"><i class="bi bi-house-door"></i> Home Cards</button>
+    <button class="adm-nav-btn" data-panel="registrations"><i class="bi bi-person-lines-fill"></i> Worker Applications</button>
+  </nav>
+
+  <div class="adm-sidebar-foot">
+    <div class="adm-open-badge"><i class="bi bi-unlock-fill"></i> Open Access Mode</div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="adm-main">
+
+  <!-- MOBILE TOP BAR -->
+  <div class="adm-mobile-bar d-lg-none">
+    <a href="index.html" class="adm-back-sm"><i class="bi bi-arrow-left"></i></a>
+    <span class="adm-mobile-title">Admin Dashboard</span>
+    <button class="adm-mobile-menu" id="mobileMenuBtn"><i class="bi bi-list"></i></button>
+  </div>
+
+  <!-- MOBILE NAV DRAWER -->
+  <div class="adm-mobile-drawer" id="mobileDrawer">
+    <button class="adm-nav-btn active" data-panel="prayers"><i class="bi bi-hands"></i> Prayer Requests</button>
+    <button class="adm-nav-btn" data-panel="sermons"><i class="bi bi-mic"></i> Sermons</button>
+    <button class="adm-nav-btn" data-panel="announcements"><i class="bi bi-megaphone"></i> Announcements</button>
+    <button class="adm-nav-btn" data-panel="homecards"><i class="bi bi-house-door"></i> Home Cards</button>
+    <button class="adm-nav-btn" data-panel="registrations"><i class="bi bi-person-lines-fill"></i> Worker Applications</button>
+  </div>
+
+  <!-- PANEL: PRAYERS -->
+  <div class="adm-panel active" id="panel-prayers">
+    <div class="adm-panel-header">
+      <div>
+        <h1>Prayer Requests</h1>
+        <p>All anonymous requests submitted by members. Remove inappropriate posts.</p>
+      </div>
+    </div>
+    <div id="prayerList" class="adm-list"></div>
+  </div>
+
+  <!-- PANEL: SERMONS -->
+  <div class="adm-panel" id="panel-sermons">
+    <div class="adm-panel-header">
+      <div>
+        <h1>Sermons</h1>
+        <p>Add, edit, or remove sermon entries shown in the Members' Portal.</p>
+      </div>
+      <button class="adm-add-btn" id="addSermonBtn"><i class="bi bi-plus-lg"></i> Add Sermon</button>
+    </div>
+
+    <!-- Sermon form -->
+    <div class="adm-form-card" id="sermonForm" style="display:none">
+      <h3 id="sermonFormTitle">Add Sermon</h3>
+      <div class="adm-fields">
+        <div class="adm-field"><label>Title</label><input type="text" id="sf_title" placeholder="e.g. Walking in Divine Purpose"></div>
+        <div class="adm-field"><label>Speaker</label><input type="text" id="sf_speaker" placeholder="e.g. Pastor Emmanuel Adeyemi"></div>
+        <div class="adm-field"><label>Date</label><input type="text" id="sf_date" placeholder="e.g. 1 June 2025"></div>
+      </div>
+      <div class="adm-form-actions">
+        <button class="adm-cancel-btn" id="sermonCancelBtn">Cancel</button>
+        <button class="adm-save-btn" id="sermonSaveBtn">Save Sermon</button>
+      </div>
+    </div>
+
+    <div id="sermonList" class="adm-list"></div>
+  </div>
+
+  <!-- PANEL: ANNOUNCEMENTS -->
+  <div class="adm-panel" id="panel-announcements">
+    <div class="adm-panel-header">
+      <div>
+        <h1>Announcements</h1>
+        <p>Add, edit, or remove announcements shown in the Members' Portal.</p>
+      </div>
+      <button class="adm-add-btn" id="addAnnouncementBtn"><i class="bi bi-plus-lg"></i> Add Announcement</button>
+    </div>
+
+    <!-- Announcement form -->
+    <div class="adm-form-card" id="announcementForm" style="display:none">
+      <h3 id="announcementFormTitle">Add Announcement</h3>
+      <div class="adm-fields">
+        <div class="adm-field"><label>Emoji</label><input type="text" id="af_emoji" placeholder="e.g. 🙌" maxlength="4"></div>
+        <div class="adm-field"><label>Tag / Category</label><input type="text" id="af_tag" placeholder="e.g. Worship"></div>
+        <div class="adm-field adm-field-full"><label>Title</label><input type="text" id="af_title" placeholder="e.g. Combined Thanksgiving Service"></div>
+        <div class="adm-field adm-field-full"><label>Body</label><textarea id="af_body" rows="3" placeholder="Announcement details…"></textarea></div>
+        <div class="adm-field"><label>Date</label><input type="text" id="af_date" placeholder="e.g. 29 June 2025"></div>
+      </div>
+      <div class="adm-form-actions">
+        <button class="adm-cancel-btn" id="announcementCancelBtn">Cancel</button>
+        <button class="adm-save-btn" id="announcementSaveBtn">Save Announcement</button>
+      </div>
+    </div>
+
+    <div id="announcementList" class="adm-list"></div>
+  </div>
+
+  <!-- PANEL: HOME CARDS -->
+  <div class="adm-panel" id="panel-homecards">
+    <div class="adm-panel-header">
+      <div>
+        <h1>Home Cards</h1>
+        <p>Edit the Daily Prayer, Bible Plan, and Worship cards shown on the Members home screen.</p>
+      </div>
+    </div>
+    <div id="homeCardList" class="adm-list"></div>
+  </div>
+
+  <!-- PANEL: REGISTRATIONS -->
+  <div class="adm-panel" id="panel-registrations">
+    <div class="adm-panel-header">
+      <div>
+        <h1>Worker Applications</h1>
+        <p>Review registration forms submitted through the Workers' Portal.</p>
+      </div>
+    </div>
+    <div id="registrationList" class="adm-list"></div>
+  </div>
+
+</main>
+
+<!-- CONFIRM MODAL -->
+<div class="adm-modal-backdrop" id="confirmBackdrop" style="display:none">
+  <div class="adm-modal">
+    <div class="adm-modal-icon"><i class="bi bi-trash3"></i></div>
+    <h3 id="confirmTitle">Delete this item?</h3>
+    <p id="confirmBody">This cannot be undone.</p>
+    <div class="adm-modal-actions">
+      <button class="adm-cancel-btn" id="confirmCancel">Cancel</button>
+      <button class="adm-delete-btn" id="confirmOk">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="shared.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+/* ─── TOKENS ── */
+:root {
+  --navy:       #0b1f4b;
+  --navy-2:     #0d2a66;
+  --navy-light: #1a3a7a;
+  --gold:       #c8860a;
+  --gold-light: #f5a623;
+  --gold-glow:  rgba(200,134,10,.15);
+  --surface:    #f4f6fb;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--surface);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── HERO ── */
+.landing-hero {
+  background: linear-gradient(165deg, var(--navy) 0%, var(--navy-2) 60%, #091838 100%);
+  padding: 56px 24px 64px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 50% 120%, rgba(200,134,10,.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-inner { position: relative; z-index: 1; }
+
+.church-mark {
+  font-size: 2.5rem;
+  color: var(--gold-light);
+  margin-bottom: 14px;
+  display: block;
+  filter: drop-shadow(0 0 18px rgba(245,166,35,.4));
+}
+
+.landing-hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+.church-sub {
+  font-size: 13px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+  font-weight: 500;
+}
+
+/* ─── PORTALS ── */
+.portals-wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 40px 16px 56px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.portals-label {
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #9ca3af;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.portals-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ─── PORTAL CARD ── */
+.portal-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.07);
+  border-radius: 22px;
+  padding: 24px 22px;
+  text-decoration: none;
+  transition: transform .22s ease, box-shadow .22s ease, border-color .2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.portal-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .25s;
+  border-radius: inherit;
+}
+
+.portal-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(11,31,75,.13);
+  text-decoration: none;
+}
+
+.portal-card:hover::before { opacity: 1; }
+.portal-card:active { transform: translateY(-1px); }
+
+/* per-portal accent colours */
+.portal-workers { border-left: 4px solid var(--gold); }
+.portal-workers::before { background: linear-gradient(90deg, var(--gold-glow), transparent 60%); }
+
+.portal-members { border-left: 4px solid #3b82f6; }
+.portal-members::before { background: linear-gradient(90deg, rgba(59,130,246,.1), transparent 60%); }
+
+.portal-admin { border-left: 4px solid #6b7280; }
+.portal-admin::before { background: linear-gradient(90deg, rgba(107,114,128,.08), transparent 60%); }
+
+/* icon */
+.portal-icon {
+  font-size: 2.2rem;
+  width: 62px; height: 62px;
+  border-radius: 18px;
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,.06);
+  position: relative; z-index: 1;
+}
+
+/* body */
+.portal-body {
+  flex: 1;
+  min-width: 0;
+  position: relative; z-index: 1;
+}
+
+.portal-body h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+  line-height: 1.25;
+}
+
+.portal-body p {
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* arrow */
+.portal-arrow {
+  font-size: 1.1rem;
+  color: #d1d5db;
+  flex-shrink: 0;
+  position: relative; z-index: 1;
+  transition: color .2s, transform .2s;
+}
+.portal-card:hover .portal-arrow {
+  color: var(--gold);
+  transform: translateX(4px);
+}
+.portal-members:hover .portal-arrow { color: #3b82f6; }
+.portal-admin:hover .portal-arrow   { color: #6b7280; }
+
+/* footer quote */
+.portals-footer {
+  margin-top: 40px;
+  text-align: center;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 13px;
+  color: #9ca3af;
+  line-height: 1.6;
+}
+
+/* ─── RESPONSIVE ── */
+@media (max-width: 480px) {
+  .landing-hero { padding: 44px 20px 52px; }
+  .portal-card  { padding: 20px 18px; gap: 14px; }
+  .portal-icon  { width: 52px; height: 52px; font-size: 1.8rem; border-radius: 14px; }
+  .portal-body h2 { font-size: 1.05rem; }
+}
