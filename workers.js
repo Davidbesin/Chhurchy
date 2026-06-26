@@ -74,18 +74,6 @@ const departments = [
     leader: "Sis. Ruth Adekunle", whatsapp: "2348021112233", phone: "2348021112233"
   },
   {
-    icon: "📖", name: "Bible Study Department", members: 28,
-    schedule: "Tuesdays · 6:30 PM",
-    shortDesc: "Growing deeper in God's Word.",
-    about: "The Bible Study Department fosters spiritual depth through weekly study sessions, topical series, and one-on-one discipleship, equipping believers to understand and share the Scriptures.",
-    meetings: [
-      { day: "Tuesday",    time: "6:30 PM",      label: "Main Bible study" },
-      { day: "3rd Sunday", time: "After service", label: "New members class" }
-    ],
-    requirements: ["Love for God's Word", "Regular attendance", "Open and teachable spirit"],
-    leader: "Pastor David Ajayi", whatsapp: "2348034567890", phone: "2348034567890"
-  },
-  {
     icon: "🤝", name: "Welfare Department", members: 20,
     schedule: "First Saturday Monthly",
     shortDesc: "Caring for church members in need.",
@@ -109,18 +97,6 @@ const departments = [
     requirements: ["Boldness and compassion", "Willingness to go out", "Basic evangelism training (provided)"],
     leader: "Bro. Philip Akinyemi", whatsapp: "2348112233445", phone: "2348112233445"
   },
-  {
-    icon: "🩺", name: "Medical Team", members: 12,
-    schedule: "Sundays & Events",
-    shortDesc: "Promoting health and safety in our community.",
-    about: "The Medical Team ensures the physical wellbeing of the congregation during services and outreaches, and also organises health talks, free checkup drives, and wellness campaigns.",
-    meetings: [
-      { day: "Sunday",       time: "8:00 AM", label: "On-duty briefing" },
-      { day: "2nd Saturday", time: "9:00 AM", label: "Health outreach planning" }
-    ],
-    requirements: ["Medical or first-aid qualification preferred", "Calm under pressure", "Current or student healthcare workers welcome"],
-    leader: "Dr. Mercy Afolabi", whatsapp: "2348123456789", phone: "2348123456789"
-  }
 ];
 
 /* ── RENDER DEPARTMENTS ── */
