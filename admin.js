@@ -1,5 +1,64 @@
 /* admin.js */
 
+/* ── AUTH ── */
+const ADMIN_USERNAME = 'admin';
+const ADMIN_PASSWORD = 'grace2024';
+const SESSION_KEY    = 'cog_admin_auth';
+
+(function initAuth() {
+  const overlay    = document.getElementById('loginOverlay');
+  const loginBtn   = document.getElementById('loginBtn');
+  const logoutBtn  = document.getElementById('logoutBtn');
+  const loginError = document.getElementById('loginError');
+  const eyeBtn     = document.getElementById('loginEyeBtn');
+  const eyeIcon    = document.getElementById('loginEyeIcon');
+  const pwInput    = document.getElementById('loginPassword');
+
+  function showDashboard() { overlay.classList.add('hidden'); }
+  function showLogin()     { overlay.classList.remove('hidden'); }
+
+  // Persist session in sessionStorage (cleared when tab closes)
+  if (sessionStorage.getItem(SESSION_KEY) === '1') showDashboard();
+
+  function attemptLogin() {
+    const user = document.getElementById('loginUsername').value.trim();
+    const pass = pwInput.value;
+    if (user === ADMIN_USERNAME && pass === ADMIN_PASSWORD) {
+      loginError.classList.remove('visible');
+      sessionStorage.setItem(SESSION_KEY, '1');
+      showDashboard();
+    } else {
+      loginError.classList.add('visible');
+      pwInput.value = '';
+      pwInput.focus();
+    }
+  }
+
+  loginBtn.addEventListener('click', attemptLogin);
+
+  // Submit on Enter key from either field
+  ['loginUsername', 'loginPassword'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => {
+      if (e.key === 'Enter') attemptLogin();
+    });
+  });
+
+  // Toggle password visibility
+  eyeBtn.addEventListener('click', () => {
+    const isHidden = pwInput.type === 'password';
+    pwInput.type = isHidden ? 'text' : 'password';
+    eyeIcon.className = isHidden ? 'bi bi-eye-slash' : 'bi bi-eye';
+  });
+
+  // Logout
+  logoutBtn.addEventListener('click', () => {
+    sessionStorage.removeItem(SESSION_KEY);
+    showLogin();
+    document.getElementById('loginUsername').value = '';
+    document.getElementById('loginPassword').value = '';
+  });
+})();
+
 /* ── PANEL SWITCHING ── */
 function switchPanel(id) {
   document.querySelectorAll('.adm-panel').forEach(p => p.classList.remove('active'));
