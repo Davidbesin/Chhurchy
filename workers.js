@@ -2,13 +2,12 @@
 
 const departments = [
   {
-    icon: "🎵", name: "Choir & Worship", 
+    icon: "🎵", name: "Choir Department", 
     schedule: "Thursdays · 6:00 PM",
     shortDesc: "Leading the congregation into worship.",
     about: "The Choir Department leads the church in heartfelt worship through songs, hymns, and special ministrations. We believe music is a powerful vehicle for God's presence, and every member plays a vital role in creating an atmosphere where lives are transformed.",
     meetings: [
-      { day: "Thursday", time: "6:00 PM", label: "Rehearsal" },
-      { day: "Sunday",   time: "8:00 AM", label: "Pre-service warm-up" }
+      { day: "Saturday",   time: "4-7 PM", label: "Practice" }
     ],
     requirements: ["A love for worship and music", "Commitment to weekly rehearsals", "Willingness to serve"],
     leader: "Bro. Samuel Adeyemi", whatsapp: "2348012345678", phone: "2348012345678"
@@ -24,18 +23,6 @@ const departments = [
     ],
     requirements: ["Warm, hospitable personality", "Punctuality and reliability", "Smart appearance on Sundays"],
     leader: "Sis. Grace Johnson", whatsapp: "2348098765432", phone: "2348098765432"
-  },
-  {
-    icon: "⚡", name: "Youth Ministry", members: 56,
-    schedule: "Fridays · 5:30 PM",
-    shortDesc: "Empowering young people for Christ.",
-    about: "The Youth Ministry is a vibrant community for young people aged 18–35. Through discipleship, mentorship, Bible-based teaching, and social engagement, we are raising a generation of purpose-driven believers.",
-    meetings: [
-      { day: "Friday",        time: "5:30 PM",  label: "Youth service" },
-      { day: "Last Saturday", time: "10:00 AM", label: "Mentorship session" }
-    ],
-    requirements: ["Ages 18–35", "Active church membership", "Heart for young people"],
-    leader: "Bro. Daniel Adebayo", whatsapp: "2348076543210", phone: "2348076543210"
   },
   {
     icon: "🌟", name: "Children's Church", members: 18,
@@ -55,7 +42,6 @@ const departments = [
     shortDesc: "Supporting worship through technology.",
     about: "The Technical Department keeps everything running seamlessly. From live sound and projection to livestreaming and recording, our team serves with skill so the congregation can focus entirely on worship.",
     meetings: [
-      { day: "Wednesday", time: "6:00 PM", label: "Team training & review" },
       { day: "Sunday",    time: "7:45 AM", label: "Equipment setup" }
     ],
     requirements: ["Basic tech or AV interest", "Willingness to learn", "Reliability on Sundays"],
@@ -72,18 +58,6 @@ const departments = [
     ],
     requirements: ["Consistent prayer life", "Commitment to early mornings", "Intercession heart"],
     leader: "Sis. Ruth Adekunle", whatsapp: "2348021112233", phone: "2348021112233"
-  },
-  {
-    icon: "🤝", name: "Welfare Department", members: 20,
-    schedule: "First Saturday Monthly",
-    shortDesc: "Caring for church members in need.",
-    about: "The Welfare Department supports members going through hardship, bereavement, or illness — coordinating visits, material assistance, and emotional support.",
-    meetings: [
-      { day: "1st Saturday", time: "10:00 AM", label: "Monthly meeting" },
-      { day: "As needed",    time: "Various",   label: "Member visits" }
-    ],
-    requirements: ["Compassionate heart", "Discretion and confidentiality", "Availability for pastoral visits"],
-    leader: "Sis. Deborah Olawale", whatsapp: "2348087654321", phone: "2348087654321"
   },
   {
     icon: "📢", name: "Evangelism Department", members: 31,
