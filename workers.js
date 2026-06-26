@@ -2,7 +2,7 @@
 
 const departments = [
   {
-    icon: "🎵", name: "Choir & Worship", members: 34,
+    icon: "🎵", name: "Choir & Worship", 
     schedule: "Thursdays · 6:00 PM",
     shortDesc: "Leading the congregation into worship.",
     about: "The Choir Department leads the church in heartfelt worship through songs, hymns, and special ministrations. We believe music is a powerful vehicle for God's presence, and every member plays a vital role in creating an atmosphere where lives are transformed.",
