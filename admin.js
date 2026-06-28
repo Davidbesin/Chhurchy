@@ -17,7 +17,6 @@ const SESSION_KEY    = 'cog_admin_auth';
   function showDashboard() { overlay.classList.add('hidden'); }
   function showLogin()     { overlay.classList.remove('hidden'); }
 
-  // Persist session in sessionStorage (cleared when tab closes)
   if (localStorage.getItem(SESSION_KEY) === '1') showDashboard();
 
   function attemptLogin() {
@@ -35,22 +34,18 @@ const SESSION_KEY    = 'cog_admin_auth';
   }
 
   loginBtn.addEventListener('click', attemptLogin);
-
-  // Submit on Enter key from either field
   ['loginUsername', 'loginPassword'].forEach(id => {
     document.getElementById(id).addEventListener('keydown', e => {
       if (e.key === 'Enter') attemptLogin();
     });
   });
 
-  // Toggle password visibility
   eyeBtn.addEventListener('click', () => {
     const isHidden = pwInput.type === 'password';
     pwInput.type = isHidden ? 'text' : 'password';
     eyeIcon.className = isHidden ? 'bi bi-eye-slash' : 'bi bi-eye';
   });
 
-  // Logout
   logoutBtn.addEventListener('click', () => {
     localStorage.removeItem(SESSION_KEY);
     showLogin();
@@ -65,7 +60,6 @@ function switchPanel(id) {
   document.querySelectorAll('.adm-nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-' + id).classList.add('active');
   document.querySelectorAll(`.adm-nav-btn[data-panel="${id}"]`).forEach(b => b.classList.add('active'));
-  // close mobile drawer
   document.getElementById('mobileDrawer').classList.remove('open');
 }
 
@@ -73,7 +67,6 @@ document.querySelectorAll('.adm-nav-btn').forEach(btn => {
   btn.addEventListener('click', () => switchPanel(btn.dataset.panel));
 });
 
-// mobile menu toggle
 document.getElementById('mobileMenuBtn').addEventListener('click', () => {
   document.getElementById('mobileDrawer').classList.toggle('open');
 });
@@ -99,11 +92,12 @@ document.getElementById('confirmOk').addEventListener('click', () => {
 /* ══════════════════════════════════════════
    PRAYERS
 ══════════════════════════════════════════ */
-function renderPrayers() {
-  const list = DB.getPrayers();
+async function renderPrayers() {
   const el   = document.getElementById('prayerList');
+  el.innerHTML = '<div class="adm-empty"><i class="bi bi-arrow-clockwise"></i> Loading…</div>';
+  const list = await DB.getPrayers();
   if (!list.length) {
-    el.innerHTML = `<div class="adm-empty"><i class="bi bi-hands"></i>No prayer requests yet.</div>`;
+    el.innerHTML = '<div class="adm-empty"><i class="bi bi-hands"></i>No prayer requests yet.</div>';
     return;
   }
   el.innerHTML = list.map(p => `
@@ -121,9 +115,9 @@ function renderPrayers() {
 
   el.querySelectorAll('.adm-del-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const id = Number(btn.dataset.id);
-      showConfirm('Remove prayer request?', 'This will delete it from the Members portal.', () => {
-        DB.deletePrayer(id);
+      const id = btn.dataset.id;
+      showConfirm('Remove prayer request?', 'This will delete it from the Members portal.', async () => {
+        await DB.deletePrayer(id);
         renderPrayers();
       });
     });
@@ -134,12 +128,15 @@ function renderPrayers() {
    SERMONS
 ══════════════════════════════════════════ */
 let editingSermonId = null;
+let _sermonCache = [];
 
-function renderSermons() {
-  const list = DB.getSermons();
-  const el   = document.getElementById('sermonList');
+async function renderSermons() {
+  const el = document.getElementById('sermonList');
+  el.innerHTML = '<div class="adm-empty"><i class="bi bi-arrow-clockwise"></i> Loading…</div>';
+  const list = await DB.getSermons();
+  _sermonCache = list;
   if (!list.length) {
-    el.innerHTML = `<div class="adm-empty"><i class="bi bi-mic"></i>No sermons yet. Add one above.</div>`;
+    el.innerHTML = '<div class="adm-empty"><i class="bi bi-mic"></i>No sermons yet. Add one above.</div>';
     return;
   }
   el.innerHTML = list.map(s => `
@@ -158,7 +155,7 @@ function renderSermons() {
 
   el.querySelectorAll('.adm-edit-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const s = DB.getSermons().find(x => x.id === Number(btn.dataset.id));
+      const s = _sermonCache.find(x => x.id === btn.dataset.id);
       if (!s) return;
       editingSermonId = s.id;
       document.getElementById('sf_title').value   = s.title;
@@ -171,9 +168,9 @@ function renderSermons() {
 
   el.querySelectorAll('.adm-del-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const id = Number(btn.dataset.id);
-      showConfirm('Delete sermon?', 'This will remove it from the Members portal.', () => {
-        DB.deleteSermon(id);
+      const id = btn.dataset.id;
+      showConfirm('Delete sermon?', 'This will remove it from the Members portal.', async () => {
+        await DB.deleteSermon(id);
         renderSermons();
       });
     });
@@ -192,7 +189,7 @@ document.getElementById('sermonCancelBtn').addEventListener('click', () => {
   editingSermonId = null;
 });
 
-document.getElementById('sermonSaveBtn').addEventListener('click', () => {
+document.getElementById('sermonSaveBtn').addEventListener('click', async () => {
   const data = {
     title:   document.getElementById('sf_title').value.trim(),
     speaker: document.getElementById('sf_speaker').value.trim(),
@@ -200,9 +197,9 @@ document.getElementById('sermonSaveBtn').addEventListener('click', () => {
   };
   if (!data.title || !data.speaker) return alert('Please fill in Title and Speaker.');
   if (editingSermonId) {
-    DB.updateSermon(editingSermonId, data);
+    await DB.updateSermon(editingSermonId, data);
   } else {
-    DB.addSermon(data);
+    await DB.addSermon(data);
   }
   document.getElementById('sermonForm').style.display = 'none';
   editingSermonId = null;
@@ -213,12 +210,15 @@ document.getElementById('sermonSaveBtn').addEventListener('click', () => {
    ANNOUNCEMENTS
 ══════════════════════════════════════════ */
 let editingAnnouncementId = null;
+let _announcementCache = [];
 
-function renderAnnouncements() {
-  const list = DB.getAnnouncements();
-  const el   = document.getElementById('announcementList');
+async function renderAnnouncements() {
+  const el = document.getElementById('announcementList');
+  el.innerHTML = '<div class="adm-empty"><i class="bi bi-arrow-clockwise"></i> Loading…</div>';
+  const list = await DB.getAnnouncements();
+  _announcementCache = list;
   if (!list.length) {
-    el.innerHTML = `<div class="adm-empty"><i class="bi bi-megaphone"></i>No announcements yet. Add one above.</div>`;
+    el.innerHTML = '<div class="adm-empty"><i class="bi bi-megaphone"></i>No announcements yet. Add one above.</div>';
     return;
   }
   el.innerHTML = list.map(a => `
@@ -239,7 +239,7 @@ function renderAnnouncements() {
 
   el.querySelectorAll('.adm-edit-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const a = DB.getAnnouncements().find(x => x.id === Number(btn.dataset.id));
+      const a = _announcementCache.find(x => x.id === btn.dataset.id);
       if (!a) return;
       editingAnnouncementId = a.id;
       document.getElementById('af_emoji').value = a.emoji;
@@ -254,9 +254,9 @@ function renderAnnouncements() {
 
   el.querySelectorAll('.adm-del-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const id = Number(btn.dataset.id);
-      showConfirm('Delete announcement?', 'This will remove it from the Members portal.', () => {
-        DB.deleteAnnouncement(id);
+      const id = btn.dataset.id;
+      showConfirm('Delete announcement?', 'This will remove it from the Members portal.', async () => {
+        await DB.deleteAnnouncement(id);
         renderAnnouncements();
       });
     });
@@ -275,7 +275,7 @@ document.getElementById('announcementCancelBtn').addEventListener('click', () =>
   editingAnnouncementId = null;
 });
 
-document.getElementById('announcementSaveBtn').addEventListener('click', () => {
+document.getElementById('announcementSaveBtn').addEventListener('click', async () => {
   const data = {
     emoji: document.getElementById('af_emoji').value.trim() || '📢',
     tag:   document.getElementById('af_tag').value.trim()   || 'General',
@@ -286,9 +286,9 @@ document.getElementById('announcementSaveBtn').addEventListener('click', () => {
   };
   if (!data.title || !data.body) return alert('Please fill in Title and Body.');
   if (editingAnnouncementId) {
-    DB.updateAnnouncement(editingAnnouncementId, data);
+    await DB.updateAnnouncement(editingAnnouncementId, data);
   } else {
-    DB.addAnnouncement(data);
+    await DB.addAnnouncement(data);
   }
   document.getElementById('announcementForm').style.display = 'none';
   editingAnnouncementId = null;
@@ -298,9 +298,10 @@ document.getElementById('announcementSaveBtn').addEventListener('click', () => {
 /* ══════════════════════════════════════════
    HOME CARDS
 ══════════════════════════════════════════ */
-function renderHomeCards() {
-  const list = DB.getHomeCards();
+async function renderHomeCards() {
   const el   = document.getElementById('homeCardList');
+  el.innerHTML = '<div class="adm-empty"><i class="bi bi-arrow-clockwise"></i> Loading…</div>';
+  const list = await DB.getHomeCards();
   el.innerHTML = list.map(c => `
     <div class="adm-item" style="flex-direction:column;align-items:stretch">
       <div class="d-flex align-items-center gap-3 mb-3">
@@ -316,11 +317,11 @@ function renderHomeCards() {
   `).join('');
 
   el.querySelectorAll('.adm-homecard-save').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       const cardId  = btn.dataset.cardId;
       const content = document.getElementById('hc_' + cardId).value.trim();
       if (!content) return;
-      DB.updateHomeCard(cardId, { content });
+      await DB.updateHomeCard(cardId, { content });
       btn.textContent = '✓ Saved';
       setTimeout(() => btn.textContent = 'Save', 1500);
     });
@@ -330,11 +331,12 @@ function renderHomeCards() {
 /* ══════════════════════════════════════════
    WORKER REGISTRATIONS
 ══════════════════════════════════════════ */
-function renderRegistrations() {
-  const list = DB.getRegistrations();
-  const el   = document.getElementById('registrationList');
+async function renderRegistrations() {
+  const el = document.getElementById('registrationList');
+  el.innerHTML = '<div class="adm-empty"><i class="bi bi-arrow-clockwise"></i> Loading…</div>';
+  const list = await DB.getRegistrations();
   if (!list.length) {
-    el.innerHTML = `<div class="adm-empty"><i class="bi bi-person-lines-fill"></i>No applications yet.</div>`;
+    el.innerHTML = '<div class="adm-empty"><i class="bi bi-person-lines-fill"></i>No applications yet.</div>';
     return;
   }
   el.innerHTML = list.map(r => `
@@ -361,22 +363,22 @@ function renderRegistrations() {
   `).join('');
 
   el.querySelectorAll('.adm-approve-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      DB.updateRegistrationStatus(Number(btn.dataset.id), 'approved');
+    btn.addEventListener('click', async () => {
+      await DB.updateRegistrationStatus(btn.dataset.id, 'approved');
       renderRegistrations();
     });
   });
   el.querySelectorAll('.adm-reject-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      DB.updateRegistrationStatus(Number(btn.dataset.id), 'rejected');
+    btn.addEventListener('click', async () => {
+      await DB.updateRegistrationStatus(btn.dataset.id, 'rejected');
       renderRegistrations();
     });
   });
   el.querySelectorAll('.adm-del-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const id = Number(btn.dataset.id);
-      showConfirm('Delete application?', 'This will permanently remove this record.', () => {
-        DB.deleteRegistration(id);
+      const id = btn.dataset.id;
+      showConfirm('Delete application?', 'This will permanently remove this record.', async () => {
+        await DB.deleteRegistration(id);
         renderRegistrations();
       });
     });
