@@ -18,14 +18,14 @@ const SESSION_KEY    = 'cog_admin_auth';
   function showLogin()     { overlay.classList.remove('hidden'); }
 
   // Persist session in sessionStorage (cleared when tab closes)
-  if (sessionStorage.getItem(SESSION_KEY) === '1') showDashboard();
+  if (localStorage.getItem(SESSION_KEY) === '1') showDashboard();
 
   function attemptLogin() {
     const user = document.getElementById('loginUsername').value.trim();
     const pass = pwInput.value;
     if (user === ADMIN_USERNAME && pass === ADMIN_PASSWORD) {
       loginError.classList.remove('visible');
-      sessionStorage.setItem(SESSION_KEY, '1');
+      localStorage.setItem(SESSION_KEY, '1');
       showDashboard();
     } else {
       loginError.classList.add('visible');
@@ -52,7 +52,7 @@ const SESSION_KEY    = 'cog_admin_auth';
 
   // Logout
   logoutBtn.addEventListener('click', () => {
-    sessionStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(SESSION_KEY);
     showLogin();
     document.getElementById('loginUsername').value = '';
     document.getElementById('loginPassword').value = '';
